@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import { FormPage, GridPage, CartPage } from '../pages';
 import './app.css';
 
@@ -48,13 +48,14 @@ export default class App extends Component {
     maxId = 100;
 
     state = {
-        items : data,
-        count: 0
+        items: data,
+        count: 0,
+        cartItems: []
     }
 
     addItem = (item) => {
-        const newItem = {...item, id: this.maxId++}
-        this.setState(({ items }) =>{
+        const newItem = { ...item, id: this.maxId++ }
+        this.setState(({ items }) => {
             const newArray = [
                 ...items,
                 newItem
@@ -65,9 +66,13 @@ export default class App extends Component {
         });
     };
 
-    removeItem = (id) => {
+    removeItem = (itemId) => {
+        const item = this.state.cartItems.find(({ id }) => id === itemId);
+        if(item){
+            this.updateOrder(itemId, -item.count);
+        }
         this.setState(({ items }) => {
-            const idx = items.findIndex((el) => el.id === id);
+            const idx = items.findIndex((el) => el.id === itemId);
             const newArray = [
                 ...items.slice(0, idx),
                 ...items.slice(idx + 1)
@@ -78,28 +83,77 @@ export default class App extends Component {
         });
     }
 
-    addToCart = () => {
-        this.setState(({count}) =>{
+    addToCart = (id) => {
+        this.updateOrder(id, 1);
+    }
+
+    updateOrder = (itemId, quantity) => {
+        const { items, cartItems } = this.state;
+
+        const initItem = items.find(({ id }) => id === itemId);
+        const itemIndex = cartItems.findIndex(({ id }) => id === itemId);
+        const item = cartItems[itemIndex];
+
+        const newItem = this.updateCartItem(initItem, item, quantity);
+        const allItems = this.updateCartItems(cartItems, newItem, itemIndex)
+        this.setState(({cartItems, count}) =>{
             return{
-                count: count + 1
+                cartItems: allItems,
+                count: allItems.map((item) => item.count).reduce((prev, curr) => prev + curr, 0)
             }
         })
     }
 
+    updateCartItem = (initItem, item = {}, quantity) => {
+
+        const {
+            id = initItem.id,
+            count = 0
+            } = item;
+    
+        return {
+            id,
+            count: count + quantity
+        };
+    };
+
+    updateCartItems = (cart, item, idx) => {
+
+        if (item.count === 0) {
+            return [
+                ...cart.slice(0, idx),
+                ...cart.slice(idx + 1)
+            ];
+        }
+
+        if (idx === -1) {
+            return [
+                ...cart,
+                item
+            ];
+        }
+
+        return [
+            ...cart.slice(0, idx),
+            item,
+            ...cart.slice(idx + 1)
+        ];
+    };
+
     render() {
         return (
             <main role="main" className="container">
-                
-                    <div className="row">
-                        <FormPage onItemAdded={this.addItem} />
-                        <CartPage count={this.state.count} />
-                    </div>
-                    <GridPage products={this.state.items} onItemRemoved={this.removeItem} onAddToCart={this.addToCart} />
-                
+
+                <div className="row">
+                    <FormPage onItemAdded={this.addItem} />
+                    <CartPage count={this.state.count} />
+                </div>
+                <GridPage products={this.state.items} onItemRemoved={this.removeItem} onAddToCart={this.addToCart} />
+
             </main>
         )
     }
-    
+
 };
 
 
