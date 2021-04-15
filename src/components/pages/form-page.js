@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const FormPage = () => {
+const FormPage = ({onItemAdded}) => {
+
+    const [ image, setImage] = useState('');
+    const [ name, setName] = useState('');
+    const [ price, setPrice] = useState('');
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        onItemAdded({image, name, price})
+    };
+
     return (
-        <form style={{width: "70%", float: "left"}}>
+        <form style={{width: "70%", float: "left"}} onSubmit={onSubmit} >
             <h1 style={{textAlign: "center"}}>Add product form</h1>
-            <input className="form-control" placeholder="Product image" />
-            <input className="form-control" placeholder="Product name" />
-            <input className="form-control" placeholder="Product price" />
+            <input className="form-control" onChange={(event) => setImage(event.target.value)} placeholder="Product image" value={image} />
+            <input className="form-control" onChange={(event) => setName(event.target.value)} placeholder="Product name" value={name} />
+            <input className="form-control" onChange={(event) => setPrice(event.target.value)} placeholder="Product price" value={price} />
             <button className="btn btn-success btn-block" style={{marginTop: "10px"}}>Submit</button>
         </form>
     )

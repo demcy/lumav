@@ -4,7 +4,7 @@ const ProductPage = (itemProps) => {
     const { image, name, price } = itemProps;
     return (
         <div className="d-flex flex-column align-content-end" style={{ height: "100%" }}>
-            <img className="card-img-top" src={image} alt="Card image" />
+            <img className="card-img-top" src={image} alt="" />
             <div className="card-body text-center">
                 <div className="price">
                     <p className="card-text" >{price}€</p>
