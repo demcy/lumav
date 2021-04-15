@@ -48,7 +48,8 @@ export default class App extends Component {
     maxId = 100;
 
     state = {
-        items : data
+        items : data,
+        count: 0
     }
 
     addItem = (item) => {
@@ -76,15 +77,24 @@ export default class App extends Component {
             };
         });
     }
+
+    addToCart = () => {
+        this.setState(({count}) =>{
+            return{
+                count: count + 1
+            }
+        })
+    }
+
     render() {
         return (
             <main role="main" className="container">
                 
                     <div className="row">
                         <FormPage onItemAdded={this.addItem} />
-                        <CartPage />
+                        <CartPage count={this.state.count} />
                     </div>
-                    <GridPage products={this.state.items} onItemRemoved={this.removeItem} />
+                    <GridPage products={this.state.items} onItemRemoved={this.removeItem} onAddToCart={this.addToCart} />
                 
             </main>
         )

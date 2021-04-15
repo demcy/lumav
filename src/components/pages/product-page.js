@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductPage = ({image, name, price, onItemRemoved}) => {
+const ProductPage = ({image, name, price, onItemRemoved, onAddToCart}) => {
     //const { image, name, price } = itemProps;
     // const remove = () => {
     //     console.log(product);
@@ -17,7 +17,7 @@ const ProductPage = ({image, name, price, onItemRemoved}) => {
                 </div >
             </div>
             <button onClick={onItemRemoved} className="btn btn-warning btn-sm btn-close">X</button>
-            <button className="btn btn-success btn-block">Add to cart</button>
+            <button onClick={onAddToCart} className="btn btn-success btn-block">Add to cart</button>
         </div>
     )
 };
