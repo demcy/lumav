@@ -1,0 +1,36 @@
+.card-body{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+.name{
+    display: block;
+    width: 100%;
+    
+}
+.price{
+    display: block;
+    width: 100%;
+}
+.card-deck{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    justify-content: center;
+    grid-row-gap: 20px;
+    margin-top: 20px;
+    padding-top: 20px;
+    clear: both;
+}
+.btn-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.jumbotron {
+    width: 25%;
+    float: right;
+    margin-top: 60px;
+}
+.form-control {
+    text-align: center;
+}
