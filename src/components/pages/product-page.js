@@ -1,10 +1,6 @@
 import React from 'react';
 
 const ProductPage = ({image, name, price, onItemRemoved, onAddToCart}) => {
-    //const { image, name, price } = itemProps;
-    // const remove = () => {
-    //     console.log(product);
-    // }
     return (
         <div className="d-flex flex-column align-content-end" style={{ height: "100%" }}>
             <img className="card-img-top" src={image} alt="" />
