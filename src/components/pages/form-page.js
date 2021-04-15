@@ -9,10 +9,13 @@ const FormPage = ({onItemAdded}) => {
     const onSubmit = (e) => {
         e.preventDefault();
         onItemAdded({image, name, price})
+        setImage('');
+        setName('');
+        setPrice('');
     };
 
     return (
-        <form style={{width: "70%", float: "left"}} onSubmit={onSubmit} >
+        <form className="col-sm-8" onSubmit={onSubmit} >
             <h1 style={{textAlign: "center"}}>Add product form</h1>
             <input className="form-control" onChange={(event) => setImage(event.target.value)} placeholder="Product image" value={image} />
             <input className="form-control" onChange={(event) => setName(event.target.value)} placeholder="Product name" value={name} />
